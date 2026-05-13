@@ -56,18 +56,32 @@ public class DhondtService {
             for (int i = 1; i <= cargos; i++) {
             // Cada fila representa votos/i para el partido p
                 cocientes.add(new ResultadoVotos(
+                    0,
                     p.getId(),
                     p.getVotos() / i,   // cociente D'Hondt
-                    0,                  // orden se asigna después del sort
-                    i,                  // índice divisor
+                    0,                   // orden se asigna después del sort
+                    i,                   // índice divisor
                     (p.getVotos() / (double) totalVotos) * 100.0, // porcentaje del partido
-                    totalVotos
+                    totalVotos,
+                    p.getVotos()         // votos originales del partido para desempate
                 ));
             }
         }
         
         // Ordena de mayor a menor cociente para determinar quién ocupa cada cargo
-        cocientes.sort((a, b) -> Integer.compare(b.getCantidadVotos(), a.getCantidadVotos()));
+        cocientes.sort((a, b) -> {
+            // Ordena por cociente de mayor a menor
+            int cmp = Integer.compare(b.getCantidadVotos(), a.getCantidadVotos());
+            if (cmp != 0) return cmp;
+
+            // Empate en cociente: gana el que tenga más votos originales
+            cmp = Integer.compare(b.getVotosPartido(), a.getVotosPartido());
+            if (cmp != 0) return cmp;
+
+            // Empate en votos también: sorteo aleatorio
+            return new java.util.Random().nextInt(2) == 0 ? 1 : -1;
+        });
+        
         // Asigna el número de orden global a cada cociente según su posición
         for (int i = 0; i < cocientes.size(); i++) {
             cocientes.get(i).setOrden(i + 1);
