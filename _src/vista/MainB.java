@@ -54,7 +54,7 @@ public class MainB extends javax.swing.JFrame {
             pnlPrincipal.revalidate();
             pnlPrincipal.repaint();
             
-            JasperViewer.viewReport(jasperPrint, false);
+            //JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, "Error al generar el informe: " + e.getMessage());
         }
@@ -84,6 +84,7 @@ public class MainB extends javax.swing.JFrame {
         mnitInformeCargos = new javax.swing.JMenuItem();
         mnuitDivisionVotos = new javax.swing.JMenuItem();
         mnitPartidos = new javax.swing.JMenuItem();
+        mnitPartidosB = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
 
@@ -91,7 +92,6 @@ public class MainB extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         pnlPrincipal.setMinimumSize(new java.awt.Dimension(200, 200));
-        pnlPrincipal.setPreferredSize(null);
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -184,6 +184,14 @@ public class MainB extends javax.swing.JFrame {
         });
         mnInformes.add(mnitPartidos);
 
+        mnitPartidosB.setText("Partidos  (simplificado)");
+        mnitPartidosB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnitPartidosBActionPerformed(evt);
+            }
+        });
+        mnInformes.add(mnitPartidosB);
+
         menuBar.add(mnInformes);
 
         setJMenuBar(menuBar);
@@ -265,6 +273,11 @@ public class MainB extends javax.swing.JFrame {
         SistemaDAO.eliminarDatos();
     }//GEN-LAST:event_mnitResetActionPerformed
 
+    private void mnitPartidosBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitPartidosBActionPerformed
+    irAlInforme("/informes/informePartidos2.jrxml");
+
+    }//GEN-LAST:event_mnitPartidosBActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +322,7 @@ public class MainB extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnitInformeCargos;
     private javax.swing.JMenuItem mnitModificar;
     private javax.swing.JMenuItem mnitPartidos;
+    private javax.swing.JMenuItem mnitPartidosB;
     private javax.swing.JMenuItem mnitReset;
     private javax.swing.JMenuItem mnitSalir;
     private javax.swing.JMenuItem mnuitDivisionVotos;
